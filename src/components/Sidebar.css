@@ -1,0 +1,30 @@
+.sidebar {
+    background-color: #15171c;
+    height: 100vh;
+    flex: 0.16;
+}
+
+.sidebar-item,
+.sidebar-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #e1e9fc;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 12px;
+}
+
+.sidebar-item:hover {
+    background-color: #252831;
+}
+
+.strategy-active {
+    background-color: #b04a4a;
+}
+
+.event-active {
+    background-color: #3a8755;
+}

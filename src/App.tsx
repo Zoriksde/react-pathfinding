@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import Visualizer from "./components/Visualizer";
+import { BFSStrategy, AbstractStrategy, EventType } from "./strategies";
 
-function App() {
+const App = () => {
+  const [currentStrategy, setCurrentStrategy] = useState<AbstractStrategy>(
+    new BFSStrategy()
+  );
+  const [currentEventType, setCurrentEventType] = useState<EventType>(
+    EventType.PATH_SOURCE
+  );
+
+  const onStrategyClickHandler = (strategy: AbstractStrategy): void => {
+    setCurrentStrategy(strategy);
+  };
+
+  const onEventTypeClickHandler = (eventType: EventType): void => {
+    setCurrentEventType(eventType);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Sidebar
+        onStrategyClick={onStrategyClickHandler}
+        onEventTypeClick={onEventTypeClickHandler}
+        strategy={currentStrategy}
+        eventType={currentEventType}
+      />
+      <Visualizer strategy={currentStrategy} eventType={currentEventType} />
     </div>
   );
-}
+};
 
 export default App;

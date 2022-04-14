@@ -1,0 +1,11 @@
+.visualizer-grid {
+    flex: 0.84;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.visualizer-row {
+    display: flex;
+}

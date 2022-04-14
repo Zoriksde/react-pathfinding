@@ -1,0 +1,17 @@
+.grid-node {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #2528316a;
+}
+
+.wall-node {
+    background-color: #252831;
+}
+
+.source-node {
+    background-color: #b04a4a;
+}
+
+.destination-node {
+    background-color: #3a8755;
+}

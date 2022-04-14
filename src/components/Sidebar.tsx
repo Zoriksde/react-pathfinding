@@ -1,19 +1,28 @@
 import "./Sidebar.css";
-import { sidebarStrategies, sidebarEvents } from "../data/sidebar-data";
+import {
+  sidebarStrategies,
+  sidebarEvents,
+  sidebarMazeGenerators,
+} from "../data/sidebar-data";
 import { AbstractStrategy, EventType } from "../strategies";
+import { AbstractGenerator } from "../generators";
 
 interface SidebarProps {
   onStrategyClick: (strategy: AbstractStrategy) => void;
   onEventTypeClick: (eventType: EventType) => void;
+  onGeneratorTypeClick: (generatorType: AbstractGenerator) => void;
   strategy: AbstractStrategy;
   eventType: EventType;
+  generator: AbstractGenerator;
 }
 
 const Sidebar = ({
   onStrategyClick,
   onEventTypeClick,
+  onGeneratorTypeClick,
   strategy,
   eventType,
+  generator,
 }: SidebarProps) => {
   return (
     <aside className="sidebar">
@@ -41,18 +50,17 @@ const Sidebar = ({
         </div>
       ))}
 
-      <div
-        className="sidebar-button"
-        style={{ backgroundColor: "rgb(7, 88, 166)" }}
-      >
-        <span>Visualize</span>
-      </div>
-      <div
-        className="sidebar-button"
-        style={{ backgroundColor: "rgb(166, 7, 88)" }}
-      >
-        <span>Clear</span>
-      </div>
+      {sidebarMazeGenerators.map((data) => (
+        <div
+          key={data.name}
+          className={`sidebar-item ${
+            data.name === generator.name && "generator-active"
+          }`}
+          onClick={onGeneratorTypeClick.bind(null, data.generator)}
+        >
+          {data.name}
+        </div>
+      ))}
     </aside>
   );
 };

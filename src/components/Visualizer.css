@@ -1,5 +1,31 @@
-.visualizer-grid {
+.visualizer {
     flex: 0.84;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.visualizer-menu {
+    background-color: #15171c;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.visualizer-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #e1e9fc;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.visualizer-grid {
     display: flex;
     flex-direction: column;
     align-items: center;

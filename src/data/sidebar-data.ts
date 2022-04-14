@@ -1,4 +1,9 @@
 import {
+  BasicRandomMazeGenerator,
+  CircuralDivisionGenerator,
+  RecursionDivisionGenerator,
+} from "../generators";
+import {
   BFSStrategy,
   DFSStrategy,
   DijkstraStrategy,
@@ -21,4 +26,11 @@ export const sidebarEvents = [
   { name: "Path Source [Start]", type: EventType.PATH_SOURCE },
   { name: "Path Destination [End]", type: EventType.PATH_DESTINATION },
   { name: "Path Walls", type: EventType.PATH_WALLS },
+];
+
+// Random maze generators that should be displayed in sidebar
+export const sidebarMazeGenerators = [
+  { name: "Basic Random Maze", generator: new BasicRandomMazeGenerator() },
+  { name: "Recursion Division", generator: new RecursionDivisionGenerator() },
+  { name: "Circural Division", generator: new CircuralDivisionGenerator() },
 ];

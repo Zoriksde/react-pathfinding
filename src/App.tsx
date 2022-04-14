@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Visualizer from "./components/Visualizer";
+import { AbstractGenerator, BasicRandomMazeGenerator } from "./generators";
 import { BFSStrategy, AbstractStrategy, EventType } from "./strategies";
 
 const App = () => {
@@ -11,6 +12,10 @@ const App = () => {
     EventType.PATH_SOURCE
   );
 
+  const [currentGenerator, setCurrentGenerator] = useState<AbstractGenerator>(
+    new BasicRandomMazeGenerator()
+  );
+
   const onStrategyClickHandler = (strategy: AbstractStrategy): void => {
     setCurrentStrategy(strategy);
   };
@@ -19,15 +24,25 @@ const App = () => {
     setCurrentEventType(eventType);
   };
 
+  const onGeneratorTypeClickHandler = (generator: AbstractGenerator): void => {
+    setCurrentGenerator(generator);
+  };
+
   return (
     <div className="app">
       <Sidebar
         onStrategyClick={onStrategyClickHandler}
         onEventTypeClick={onEventTypeClickHandler}
+        onGeneratorTypeClick={onGeneratorTypeClickHandler}
         strategy={currentStrategy}
         eventType={currentEventType}
+        generator={currentGenerator}
       />
-      <Visualizer strategy={currentStrategy} eventType={currentEventType} />
+      <Visualizer
+        strategy={currentStrategy}
+        eventType={currentEventType}
+        generator={currentGenerator}
+      />
     </div>
   );
 };

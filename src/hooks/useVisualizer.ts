@@ -10,12 +10,12 @@ interface VisualizerHookArgs {
 export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
   const [visualizationGrid, setVisualizationGrid] = useState<Node[][]>([]);
   const [pathSource, setPathSource] = useState<{ row: number; column: number }>(
-    { row: 12, column: 42 }
+    { row: 12, column: 33 }
   );
   const [pathDestination, setPathDestination] = useState<{
     row: number;
     column: number;
-  }>({ row: 27, column: 3 });
+  }>({ row: 19, column: 3 });
 
   // Initializes visualization grid with usage of grid
   const initVisualizationGrid = useCallback((): void => {
@@ -48,6 +48,11 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
   ): void => {
     setVisualizationGrid((prevVisualizationGrid) => {
       const updatedVisualizationGrid = [...prevVisualizationGrid];
+
+      if (
+        updatedVisualizationGrid[row][column].nodeType !== NodeType.PATH_UNUSED
+      )
+        return updatedVisualizationGrid;
 
       if (eventType === EventType.PATH_WALLS)
         updatedVisualizationGrid[row][column].setNodeType(NodeType.PATH_WALL);
@@ -88,7 +93,9 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
   };
 
   // Runs current strategy on grid
-  const runPathfinding = (strategy: AbstractStrategy): void => {};
+  const runPathfinding = (strategy: AbstractStrategy): void => {
+    // strategy.runPathfinding();
+  };
 
   useEffect(() => {
     initVisualizationGrid();

@@ -17,22 +17,58 @@ interface VisualizerProps {
 
 const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
   const [grid] = usePathfinding({ rows: ROWS, columns: COLUMNS });
-  const { visualizationGrid, setNodeAction } = useVisualizer({ grid: grid });
+  const {
+    visualizationGrid,
+    isVisualizing,
+    setNodeAction,
+    runPathfinding,
+    runGenerating,
+    clearPathfidning,
+  } = useVisualizer({
+    grid: grid,
+  });
 
   const onNodeClickHandler = (row: number, column: number): void => {
+    if (isVisualizing) return;
     setNodeAction(row, column, eventType);
+  };
+
+  const onVisualizerClickHandler = (): void => {
+    if (isVisualizing) return;
+    runPathfinding(strategy);
+  };
+
+  const onGeneratorClickHandler = (): void => {
+    if (isVisualizing) return;
+    runGenerating(generator);
+  };
+
+  const onClearClickHandler = (): void => {
+    clearPathfidning();
   };
 
   return (
     <div className="visualizer">
       <div className="visualizer-menu">
-        <div className="visualizer-item" style={{ backgroundColor: "#e050bc" }}>
+        <div
+          className="visualizer-item"
+          style={{ backgroundColor: isVisualizing ? "#c12362" : "#e050bc" }}
+          onClick={onVisualizerClickHandler}
+        >
           <span>Visualize {strategy.name}</span>
         </div>
-        <div className="visualizer-item" style={{ backgroundColor: "#b04a4a" }}>
+        <div
+          className="visualizer-item"
+          style={{ backgroundColor: isVisualizing ? "#c12362" : "#b04a4a" }}
+          onClick={onGeneratorClickHandler}
+        >
           <span>Generate {generator.name}</span>
         </div>
-        <div className="visualizer-item" style={{ backgroundColor: "#3a8755" }}>
+        <div
+          className="visualizer-item"
+          style={{ backgroundColor: "#3a8755" }}
+          onClick={onClearClickHandler}
+        >
           <span>Clear</span>
         </div>
       </div>

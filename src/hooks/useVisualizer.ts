@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { AbstractGenerator } from "../generators";
 import { AbstractStrategy, EventType, NodeType } from "../strategies";
 import { Node } from "../strategies/Node";
 
@@ -6,16 +7,20 @@ interface VisualizerHookArgs {
   grid: Node[][];
 }
 
+const INITIAL_SOURCE = { row: 3, column: 13 };
+const INITIAL_DESTINATION = { row: 24, column: 48 };
+
 // Custom hook with allows us to visualize effects of pathfinding algorithms
 export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
   const [visualizationGrid, setVisualizationGrid] = useState<Node[][]>([]);
   const [pathSource, setPathSource] = useState<{ row: number; column: number }>(
-    { row: 12, column: 33 }
+    INITIAL_SOURCE
   );
   const [pathDestination, setPathDestination] = useState<{
     row: number;
     column: number;
-  }>({ row: 19, column: 3 });
+  }>(INITIAL_DESTINATION);
+  const [isVisualizing, setIsVisualizing] = useState<boolean>(false);
 
   // Initializes visualization grid with usage of grid
   const initVisualizationGrid = useCallback((): void => {
@@ -94,7 +99,75 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
 
   // Runs current strategy on grid
   const runPathfinding = (strategy: AbstractStrategy): void => {
-    // strategy.runPathfinding();
+    setIsVisualizing(true);
+    const sourceNode = visualizationGrid[pathSource.row][pathSource.column];
+    const destinationNode =
+      visualizationGrid[pathDestination.row][pathDestination.column];
+    const pathfindingPath = strategy.runPathfinding(
+      sourceNode,
+      destinationNode
+    );
+
+    setVisualizationGrid((prevVisualizationGrid) => {
+      const updatedVisualizationGrid = [...prevVisualizationGrid];
+
+      pathfindingPath.forEach((pathNode) => {
+        updatedVisualizationGrid[pathNode.row][pathNode.column].setNodeType(
+          NodeType.PATH_VISUALIZED
+        );
+      });
+
+      return updatedVisualizationGrid;
+    });
+  };
+
+  // Runs current generating on grid
+  const runGenerating = (generator: AbstractGenerator): void => {
+    const generatedGrid = generator.generate(visualizationGrid);
+
+    setVisualizationGrid((prevVisualizationGrid) => {
+      const updatedVisualizationGrid = [...prevVisualizationGrid];
+
+      generatedGrid.forEach((gridNode) => {
+        if (
+          (pathSource.row === gridNode.row &&
+            pathSource.column === gridNode.column) ||
+          (pathDestination.row === gridNode.row &&
+            pathDestination.column === gridNode.column)
+        )
+          return;
+
+        updatedVisualizationGrid[gridNode.row][gridNode.column].setNodeType(
+          NodeType.PATH_WALL
+        );
+      });
+
+      return updatedVisualizationGrid;
+    });
+  };
+
+  // Clears whole grid with intial source and destination nodes
+  const clearPathfidning = (): void => {
+    setVisualizationGrid((prevVisualizationGrid) => {
+      const updatedVisualizationGrid = [...prevVisualizationGrid];
+
+      updatedVisualizationGrid.forEach((row) =>
+        row.forEach((node) => {
+          if (
+            !(
+              (node.row === pathSource.row &&
+                node.column === pathSource.column) ||
+              (node.row === pathDestination.row &&
+                node.column === pathDestination.column)
+            )
+          )
+            node.setNodeType(NodeType.PATH_UNUSED);
+        })
+      );
+
+      setIsVisualizing(false);
+      return updatedVisualizationGrid;
+    });
   };
 
   useEffect(() => {
@@ -102,5 +175,12 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
     initPathNodes();
   }, [initVisualizationGrid, initPathNodes]);
 
-  return { visualizationGrid, setNodeAction };
+  return {
+    visualizationGrid,
+    isVisualizing,
+    setNodeAction,
+    runPathfinding,
+    runGenerating,
+    clearPathfidning,
+  };
 };

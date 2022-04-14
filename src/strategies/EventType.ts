@@ -9,4 +9,5 @@ export enum NodeType {
   PATH_DESTINATION,
   PATH_WALL,
   PATH_UNUSED,
+  PATH_VISUALIZED,
 }

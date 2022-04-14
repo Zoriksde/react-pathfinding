@@ -1,4 +1,5 @@
 import { AbstractStrategy } from "./AbstractStrategy";
+import { Node } from "./Node";
 
 export class DFSStrategy extends AbstractStrategy {
   constructor() {

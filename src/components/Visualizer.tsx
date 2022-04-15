@@ -6,8 +6,8 @@ import GridNode from "./GridNode";
 import "./Visualizer.css";
 import { AbstractGenerator } from "../generators";
 
-export const ROWS = 26;
-export const COLUMNS = 50;
+export const ROWS = 27;
+export const COLUMNS = 51;
 
 interface VisualizerProps {
   strategy: AbstractStrategy;

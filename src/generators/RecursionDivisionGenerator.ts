@@ -2,6 +2,11 @@ import { COLUMNS, ROWS } from "../components/Visualizer";
 import { Node } from "../strategies/Node";
 import { AbstractGenerator } from "./AbstractGenerator";
 
+enum RandomCriteria {
+  RANDOM_EVEN,
+  RANDOM_ODD,
+}
+
 export class RecursionDivisionGenerator extends AbstractGenerator {
   constructor() {
     super("Recursion Division");
@@ -9,15 +14,17 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
 
   generate(grid: Node[][]): Node[] {
     const resultGrid: Node[] = [];
+
     const outerWalls = this.generateOuterWalls(grid);
     const innerWalls: Node[] = [];
+
     this.generateInnerWalls(
       grid,
       true,
       1,
       COLUMNS - 2,
       1,
-      ROWS - 1,
+      ROWS - 2,
       innerWalls
     );
 
@@ -46,61 +53,71 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
 
   private generateInnerWalls(
     grid: Node[][],
-    horizontal: boolean = true,
+    horizontalDivision: boolean = true,
     columnMin: number,
     columnMax: number,
     rowMin: number,
     rowMax: number,
     resultGrid: Node[]
   ): void {
-    if (horizontal) {
+    if (horizontalDivision) {
       if (columnMax - columnMin < 2) return;
-      const randomHorizontalRow =
-        Math.floor(this.randomNumber(rowMin, rowMax) / 2) * 2;
+
+      const currentHorizontalRow = this.randomNumber(
+        rowMin,
+        rowMax,
+        RandomCriteria.RANDOM_EVEN
+      );
+
       this.addHorizontalWalls(
         grid,
         columnMin,
         columnMax,
-        randomHorizontalRow,
+        currentHorizontalRow,
         resultGrid
       );
 
       this.generateInnerWalls(
         grid,
-        !horizontal,
+        !horizontalDivision,
         columnMin,
         columnMax,
         rowMin,
-        randomHorizontalRow - 1,
+        currentHorizontalRow - 1,
         resultGrid
       );
 
       this.generateInnerWalls(
         grid,
-        !horizontal,
+        !horizontalDivision,
         columnMin,
         columnMax,
-        randomHorizontalRow + 1,
+        currentHorizontalRow + 1,
         rowMax,
         resultGrid
       );
     } else {
       if (rowMax - rowMin < 2) return;
-      const randomHorizontalColumn =
-        Math.floor(this.randomNumber(columnMin, columnMax) / 2) * 2;
+
+      const currentVerticalColumn = this.randomNumber(
+        columnMin,
+        columnMax,
+        RandomCriteria.RANDOM_EVEN
+      );
+
       this.addVerticalWalls(
         grid,
         rowMin,
         rowMax,
-        randomHorizontalColumn,
+        currentVerticalColumn,
         resultGrid
       );
 
       this.generateInnerWalls(
         grid,
-        !horizontal,
+        !horizontalDivision,
         columnMin,
-        randomHorizontalColumn - 1,
+        currentVerticalColumn - 1,
         rowMin,
         rowMax,
         resultGrid
@@ -108,8 +125,8 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
 
       this.generateInnerWalls(
         grid,
-        !horizontal,
-        randomHorizontalColumn + 1,
+        !horizontalDivision,
+        currentVerticalColumn + 1,
         columnMax,
         rowMin,
         rowMax,
@@ -118,8 +135,22 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
     }
   }
 
-  private randomNumber(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  private randomNumber(
+    min: number,
+    max: number,
+    criteria: RandomCriteria
+  ): number {
+    const randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
+    if (criteria === RandomCriteria.RANDOM_EVEN && randomNumber % 2 !== 0) {
+      return randomNumber === min ? randomNumber + 1 : randomNumber - 1;
+    } else if (
+      criteria === RandomCriteria.RANDOM_ODD &&
+      randomNumber % 2 === 0
+    ) {
+      return randomNumber === min ? randomNumber + 1 : randomNumber - 1;
+    }
+
+    return randomNumber;
   }
 
   private addHorizontalWalls(
@@ -129,8 +160,11 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
     currentRow: number,
     resultGrid: Node[]
   ): void {
-    const newHole =
-      Math.floor(this.randomNumber(columnMin, columnMax) / 2) * 2 + 1;
+    const newHole = this.randomNumber(
+      columnMin,
+      columnMax,
+      RandomCriteria.RANDOM_ODD
+    );
 
     for (let column = columnMin; column <= columnMax; column++) {
       if (newHole === column) continue;
@@ -145,7 +179,11 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
     currentColumn: number,
     resultGrid: Node[]
   ): void {
-    const newHole = Math.floor(this.randomNumber(rowMin, rowMax) / 2) * 2 + 1;
+    const newHole = this.randomNumber(
+      rowMin,
+      rowMax,
+      RandomCriteria.RANDOM_ODD
+    );
 
     for (let row = rowMin; row <= rowMax; row++) {
       if (newHole === row) continue;

@@ -65,7 +65,6 @@ export class DijkstraStrategy extends AbstractStrategy {
 
     while (currentNode !== undefined) {
       resultPath.unshift(currentNode);
-      console.log(parents[currentNode?.row][currentNode?.column]);
       currentNode = parents[currentNode.row][currentNode.column];
     }
 

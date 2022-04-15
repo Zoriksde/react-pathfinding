@@ -7,6 +7,11 @@ interface PQEntry {
   priority: number;
 }
 
+export enum PQType {
+  MIN,
+  MAX,
+}
+
 const root = 0;
 const parent = (i: number): number => ((i + 1) >>> 1) - 1;
 const left = (i: number): number => (i << 1) + 1;
@@ -14,12 +19,14 @@ const right = (i: number): number => (i + 1) << 1;
 
 export class PriorityQueue {
   private heap: PQEntry[];
+  private comparator: ComparatorFunction;
 
-  constructor(
-    public comparator: ComparatorFunction = (a: PQEntry, b: PQEntry) =>
-      a.priority < b.priority
-  ) {
+  constructor(pqType: PQType = PQType.MIN) {
     this.heap = [];
+    this.comparator =
+      pqType === PQType.MIN
+        ? (a: PQEntry, b: PQEntry) => a.priority < b.priority
+        : (a: PQEntry, b: PQEntry) => a.priority > b.priority;
   }
 
   push(entry: PQEntry): void {

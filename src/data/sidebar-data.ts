@@ -7,7 +7,7 @@ import {
   BFSStrategy,
   DFSStrategy,
   DijkstraStrategy,
-  BellmanFordStrategy,
+  BestFirstSearch,
   AStarStrategy,
   EventType,
 } from "../strategies";
@@ -17,7 +17,7 @@ export const sidebarStrategies = [
   { name: "Breadth First Search", strategy: new BFSStrategy() },
   { name: "Depth First Search", strategy: new DFSStrategy() },
   { name: "Dijkstra", strategy: new DijkstraStrategy() },
-  { name: "Bellman Ford", strategy: new BellmanFordStrategy() },
+  { name: "Best First Search", strategy: new BestFirstSearch() },
   { name: "A*", strategy: new AStarStrategy() },
 ];
 

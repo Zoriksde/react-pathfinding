@@ -123,7 +123,7 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
           if (_i === pathfindingPath.length - 1) setIsLoading(false);
           return updatedVisualizationGrid;
         });
-      }, 60 * _i);
+      }, 20 * _i);
     });
   };
 
@@ -154,7 +154,7 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
           if (_i === generatedGrid.length - 1) setIsGenerating(false);
           return updatedVisualizationGrid;
         });
-      }, 60 * _i);
+      }, 20 * _i);
     });
   };
 

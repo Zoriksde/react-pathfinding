@@ -20,6 +20,8 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
   const {
     visualizationGrid,
     isVisualizing,
+    isGenerating,
+    isLoading,
     setNodeAction,
     runPathfinding,
     runGenerating,
@@ -29,21 +31,22 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
   });
 
   const onNodeClickHandler = (row: number, column: number): void => {
-    if (isVisualizing) return;
+    if (isVisualizing || isGenerating) return;
     setNodeAction(row, column, eventType);
   };
 
   const onVisualizerClickHandler = (): void => {
-    if (isVisualizing) return;
+    if (isVisualizing || isGenerating) return;
     runPathfinding(strategy);
   };
 
   const onGeneratorClickHandler = (): void => {
-    if (isVisualizing) return;
+    if (isVisualizing || isGenerating) return;
     runGenerating(generator);
   };
 
   const onClearClickHandler = (): void => {
+    if (isLoading || isGenerating) return;
     clearPathfidning();
   };
 
@@ -52,21 +55,29 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
       <div className="visualizer-menu">
         <div
           className="visualizer-item"
-          style={{ backgroundColor: isVisualizing ? "#c12362" : "#e050bc" }}
+          style={{
+            backgroundColor:
+              isVisualizing || isGenerating ? "#c12362" : "#e050bc",
+          }}
           onClick={onVisualizerClickHandler}
         >
           <span>Visualize {strategy.name}</span>
         </div>
         <div
           className="visualizer-item"
-          style={{ backgroundColor: isVisualizing ? "#c12362" : "#b04a4a" }}
+          style={{
+            backgroundColor:
+              isVisualizing || isGenerating ? "#c12362" : "#b04a4a",
+          }}
           onClick={onGeneratorClickHandler}
         >
           <span>Generate {generator.name}</span>
         </div>
         <div
           className="visualizer-item"
-          style={{ backgroundColor: "#3a8755" }}
+          style={{
+            backgroundColor: isLoading || isGenerating ? "#c12362" : "#3a8755",
+          }}
           onClick={onClearClickHandler}
         >
           <span>Clear</span>

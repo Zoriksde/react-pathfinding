@@ -6,6 +6,9 @@
 
 .wall-node {
     background-color: #252831;
+    animation-name: wallNode;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
 }
 
 .source-node {
@@ -17,5 +20,32 @@
 }
 
 .visualized-node {
-    background-color: #e050bc;
+    background-color: #ef7110;
+    animation-name: visualizedNode;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+}
+
+@keyframes wallNode {
+    from {
+        transform: scale(1.5) rotate(180deg);
+    }
+
+    to {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes visualizedNode {
+    0% {
+        transform: scale(1.5)
+    }
+
+    50% {
+        transform: scale(0.8)
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

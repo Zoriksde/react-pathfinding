@@ -67,8 +67,11 @@ export class DijkstraStrategy extends AbstractStrategy {
       });
     }
 
-    if (distances[destination.row][destination.column] === Infinity)
+    if (distances[destination.row][destination.column] === 1e4) {
+      visitedNodes.shift();
       return [visitedNodes, []];
+    }
+
     const resultPath: Node[] = [];
     let currentNode: Node | undefined =
       parents[destination.row][destination.column];

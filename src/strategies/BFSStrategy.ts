@@ -59,7 +59,6 @@ export class BFSStrategy extends AbstractStrategy {
       });
     }
 
-    visitedNodes.pop();
     visitedNodes.shift();
     return [visitedNodes, []];
   }

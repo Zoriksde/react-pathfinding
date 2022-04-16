@@ -75,7 +75,6 @@ export class BestFirstSearch extends AbstractStrategy {
       });
     }
 
-    visitedNodes.pop();
     visitedNodes.shift();
     return [visitedNodes, []];
   }

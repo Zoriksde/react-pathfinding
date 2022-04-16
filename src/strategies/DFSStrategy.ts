@@ -59,7 +59,6 @@ export class DFSStrategy extends AbstractStrategy {
       });
     }
 
-    visitedNodes.pop();
     visitedNodes.shift();
     return [visitedNodes, []];
   }

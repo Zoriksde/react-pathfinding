@@ -1,8 +1,7 @@
 .visualizer {
-    flex: 0.84;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    flex: 14;
 }
 
 .visualizer-menu {
@@ -10,6 +9,7 @@
     display: flex;
     justify-content: flex-end;
     gap: 12px;
+    padding-right: 12px;
 }
 
 .visualizer-item {
@@ -18,7 +18,7 @@
     align-items: center;
     padding: 20px;
     color: #e1e9fc;
-    font-size: 18px;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     margin-bottom: 12px;
@@ -29,9 +29,33 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    margin: auto 0;
 }
 
 .visualizer-row {
     display: flex;
+}
+
+@media screen and (max-width: 1640px) {
+    .visualizer-item {
+        font-size: 11px;
+        padding: 14px;
+    }
+}
+
+@media screen and (max-width: 1240px) {
+    .visualizer-menu {
+        justify-content: center;
+        padding: 10px;
+    }
+    
+    .visualizer-item {
+        font-size: 14px;
+        padding: 18px;
+    }
+
+    .visualizer-grid {
+        margin: 12px 0 ;
+    }
+
 }

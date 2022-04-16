@@ -1,7 +1,7 @@
 .sidebar {
     background-color: #15171c;
     height: 100vh;
-    flex: 0.16;
+    flex: 3;
 }
 
 .sidebar-item{
@@ -10,7 +10,7 @@
     align-items: center;
     padding: 20px;
     color: #e1e9fc;
-    font-size: 18px;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     margin-bottom: 12px;
@@ -34,4 +34,11 @@
 
 .generator-active {
     background-color: #3e5d72;
+}
+
+@media screen and (max-width: 1640px) {
+    .sidebar-item {
+        font-size: 11px;
+        padding: 14px;
+    }
 }

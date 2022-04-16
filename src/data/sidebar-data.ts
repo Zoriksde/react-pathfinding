@@ -1,6 +1,6 @@
 import {
   BasicRandomMazeGenerator,
-  CircuralDivisionGenerator,
+  RandomWallsGenerator,
   RecursionDivisionGenerator,
 } from "../generators";
 import {
@@ -32,5 +32,5 @@ export const sidebarEvents = [
 export const sidebarMazeGenerators = [
   { name: "Basic Random Maze", generator: new BasicRandomMazeGenerator() },
   { name: "Recursion Division", generator: new RecursionDivisionGenerator() },
-  { name: "Circural Division", generator: new CircuralDivisionGenerator() },
+  { name: "Random Walls", generator: new RandomWallsGenerator() },
 ];

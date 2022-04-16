@@ -2,7 +2,7 @@ import { COLUMNS, ROWS } from "../components/Visualizer";
 import { Node } from "../strategies/Node";
 import { AbstractGenerator } from "./AbstractGenerator";
 
-enum RandomCriteria {
+export enum RandomCriteria {
   RANDOM_EVEN,
   RANDOM_ODD,
 }
@@ -34,7 +34,7 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
     return resultGrid;
   }
 
-  private generateOuterWalls(grid: Node[][]): Node[] {
+  public generateOuterWalls(grid: Node[][]): Node[] {
     const outerWalls: Node[] = [];
 
     for (let row = 0; row < ROWS; row++) {
@@ -51,7 +51,7 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
     return outerWalls;
   }
 
-  private generateInnerWalls(
+  public generateInnerWalls(
     grid: Node[][],
     horizontalDivision: boolean = true,
     columnMin: number,
@@ -135,7 +135,7 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
     }
   }
 
-  private randomNumber(
+  public randomNumber(
     min: number,
     max: number,
     criteria: RandomCriteria

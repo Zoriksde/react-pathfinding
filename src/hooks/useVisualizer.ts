@@ -139,6 +139,7 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
   // Runs current generating on grid
   const runGenerating = (generator: AbstractGenerator): void => {
     setIsGenerating(true);
+    clearPathfidning();
     const generatedGrid = generator.generate(visualizationGrid);
 
     generatedGrid.forEach((gridNode, _i) => {

@@ -1,5 +1,5 @@
 import { COLUMNS, ROWS } from "../components/Visualizer";
-import { PQType, PriorityQueue } from "../structures";
+import { PriorityQueue } from "../structures";
 import { AbstractStrategy } from "./AbstractStrategy";
 import { NodeType } from "./EventType";
 import { Node } from "./Node";
@@ -13,7 +13,7 @@ export class BestFirstSearch extends AbstractStrategy {
     const visited: boolean[][] = [];
     const parents: (Node | undefined)[][] = [];
 
-    const priorityQueue = new PriorityQueue(PQType.MAX);
+    const priorityQueue = new PriorityQueue();
     priorityQueue.push({ node: source, priority: 0 });
 
     const visitedNodes: Node[] = [];
@@ -63,12 +63,33 @@ export class BestFirstSearch extends AbstractStrategy {
 
         visited[neighbour.row][neighbour.column] = true;
         parents[neighbour.row][neighbour.column] = currentNode;
-        priorityQueue.push({ node: neighbour, priority: 1 });
+        priorityQueue.push({
+          node: neighbour,
+          priority: this.getHeuristic(
+            neighbour.row,
+            neighbour.column,
+            destination.row,
+            destination.column
+          ),
+        });
       });
     }
 
     visitedNodes.pop();
     visitedNodes.shift();
     return [visitedNodes, []];
+  }
+
+  // Manhattan distance heuristic
+  private getHeuristic(
+    nodeRow: number,
+    nodeColumn: number,
+    destinationRow: number,
+    destinationColumn: number
+  ): number {
+    const rowsDifference = Math.abs(nodeRow - destinationRow);
+    const columnsDifference = Math.abs(nodeColumn - destinationColumn);
+
+    return rowsDifference + columnsDifference;
   }
 }

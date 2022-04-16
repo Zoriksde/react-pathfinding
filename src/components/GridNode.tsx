@@ -15,7 +15,8 @@ const GridNode = ({ row, column, nodeType, onClick }: GridNodeProps) => {
       className={`grid-node ${nodeType === NodeType.PATH_WALL && "wall-node"}
       ${nodeType === NodeType.PATH_SOURCE && "source-node"}
       ${nodeType === NodeType.PATH_DESTINATION && "destination-node"}
-      ${nodeType === NodeType.PATH_VISUALIZED && "visualized-node"}`}
+      ${nodeType === NodeType.PATH_VISUALIZED && "visualized-node"}
+      ${nodeType === NodeType.PATH_VISITED && "visited-node"}`}
       onClick={onClick.bind(null, row, column)}
       style={{
         borderBottom: row === ROWS - 1 ? "1px solid #2528316a" : "none",

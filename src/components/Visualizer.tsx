@@ -57,7 +57,7 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
           className="visualizer-item"
           style={{
             backgroundColor:
-              isVisualizing || isGenerating ? "#c12362" : "#e050bc",
+              isVisualizing || isGenerating ? "#c12362" : "#5cc9cb",
           }}
           onClick={onVisualizerClickHandler}
         >
@@ -67,7 +67,7 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
           className="visualizer-item"
           style={{
             backgroundColor:
-              isVisualizing || isGenerating ? "#c12362" : "#b04a4a",
+              isVisualizing || isGenerating ? "#c12362" : "#3e5d72",
           }}
           onClick={onGeneratorClickHandler}
         >
@@ -76,7 +76,7 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
         <div
           className="visualizer-item"
           style={{
-            backgroundColor: isLoading || isGenerating ? "#c12362" : "#3a8755",
+            backgroundColor: isLoading || isGenerating ? "#c12362" : "#0f8b6a",
           }}
           onClick={onClearClickHandler}
         >

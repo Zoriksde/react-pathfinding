@@ -9,11 +9,14 @@ export class BestFirstSearch extends AbstractStrategy {
     super("Best First Search");
   }
 
-  runPathfinding(source: Node, destination: Node): Node[] {
+  runPathfinding(source: Node, destination: Node): [Node[], Node[]] {
     const visited: boolean[][] = [];
     const parents: (Node | undefined)[][] = [];
+
     const priorityQueue = new PriorityQueue(PQType.MAX);
     priorityQueue.push({ node: source, priority: 0 });
+
+    const visitedNodes: Node[] = [];
 
     for (let row = 0; row < ROWS; row++) {
       visited.push([]);
@@ -32,6 +35,8 @@ export class BestFirstSearch extends AbstractStrategy {
       const currentEntry = priorityQueue.poll();
       let currentNode: Node | undefined = currentEntry.node;
 
+      visitedNodes.push(currentNode);
+
       if (
         currentNode.row === destination.row &&
         currentNode.column === destination.column
@@ -44,7 +49,9 @@ export class BestFirstSearch extends AbstractStrategy {
         }
 
         resultPath.pop();
-        return resultPath;
+        visitedNodes.pop();
+        visitedNodes.shift();
+        return [visitedNodes, resultPath];
       }
 
       currentNode.neighbours.forEach((neighbour) => {
@@ -60,6 +67,8 @@ export class BestFirstSearch extends AbstractStrategy {
       });
     }
 
-    return [];
+    visitedNodes.pop();
+    visitedNodes.shift();
+    return [visitedNodes, []];
   }
 }

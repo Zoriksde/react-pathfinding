@@ -10,4 +10,5 @@ export enum NodeType {
   PATH_WALL,
   PATH_UNUSED,
   PATH_VISUALIZED,
+  PATH_VISITED,
 }

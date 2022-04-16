@@ -9,10 +9,12 @@ export class DijkstraStrategy extends AbstractStrategy {
     super("Dijkstra");
   }
 
-  runPathfinding(source: Node, destination: Node): Node[] {
+  runPathfinding(source: Node, destination: Node): [Node[], Node[]] {
     const distances: number[][] = [];
     const visited: boolean[][] = [];
     const parents: (Node | undefined)[][] = [];
+
+    const visitedNodes: Node[] = [];
 
     const priorityQueue = new PriorityQueue();
     priorityQueue.push({ node: source, priority: 0 });
@@ -35,6 +37,13 @@ export class DijkstraStrategy extends AbstractStrategy {
     while (!priorityQueue.isEmpty()) {
       const currentEntry = priorityQueue.poll();
       const currentNode = currentEntry.node;
+      visitedNodes.push(currentNode);
+
+      if (
+        currentNode.row === destination.row &&
+        currentNode.column === destination.column
+      )
+        break;
 
       visited[currentNode.row][currentNode.column] = true;
       if (
@@ -58,7 +67,8 @@ export class DijkstraStrategy extends AbstractStrategy {
       });
     }
 
-    if (distances[destination.row][destination.column] === Infinity) return [];
+    if (distances[destination.row][destination.column] === Infinity)
+      return [visitedNodes, []];
     const resultPath: Node[] = [];
     let currentNode: Node | undefined =
       parents[destination.row][destination.column];
@@ -70,6 +80,8 @@ export class DijkstraStrategy extends AbstractStrategy {
 
     resultPath.shift();
 
-    return resultPath;
+    visitedNodes.pop();
+    visitedNodes.shift();
+    return [visitedNodes, resultPath];
   }
 }

@@ -8,10 +8,12 @@ export class BFSStrategy extends AbstractStrategy {
     super("Breadth First Search");
   }
 
-  runPathfinding(source: Node, destination: Node): Node[] {
+  runPathfinding(source: Node, destination: Node): [Node[], Node[]] {
     const queue = [source];
     const visited: boolean[][] = [];
     const parents: (Node | undefined)[][] = [];
+
+    const visitedNodes: Node[] = [];
 
     for (let row = 0; row < ROWS; row++) {
       visited.push([]);
@@ -26,6 +28,8 @@ export class BFSStrategy extends AbstractStrategy {
     while (queue.length > 0) {
       let currentNode = queue.shift();
 
+      if (currentNode !== undefined) visitedNodes.push(currentNode);
+
       if (
         currentNode?.row === destination.row &&
         currentNode?.column === destination.column
@@ -38,7 +42,9 @@ export class BFSStrategy extends AbstractStrategy {
         }
 
         resultPath.pop();
-        return resultPath;
+        visitedNodes.pop();
+        visitedNodes.shift();
+        return [visitedNodes, resultPath];
       }
 
       currentNode?.neighbours.forEach((neighbour) => {
@@ -53,6 +59,8 @@ export class BFSStrategy extends AbstractStrategy {
       });
     }
 
-    return [];
+    visitedNodes.pop();
+    visitedNodes.shift();
+    return [visitedNodes, []];
   }
 }

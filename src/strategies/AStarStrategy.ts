@@ -6,7 +6,7 @@ export class AStarStrategy extends AbstractStrategy {
     super("A*");
   }
 
-  runPathfinding(source: Node, destination: Node): Node[] {
-    return [];
+  runPathfinding(source: Node, destination: Node): [Node[], Node[]] {
+    return [[], []];
   }
 }

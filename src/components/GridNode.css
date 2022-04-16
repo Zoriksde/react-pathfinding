@@ -12,16 +12,23 @@
 }
 
 .source-node {
-    background-color: #3a8755;
+    background-color: #5cc9cb;
 }
 
 .destination-node {
-    background-color: #b04a4a;
+    background-color: #0f8b6a;
 }
 
 .visualized-node {
-    background-color: #ef7110;
+    background-color: #64ab1e;
     animation-name: visualizedNode;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+}
+
+.visited-node {
+    background-color: #3e5d72;
+    animation-name: visitedNode;
     animation-duration: 0.2s;
     animation-iteration-count: 1;
 }
@@ -43,6 +50,27 @@
 
     50% {
         transform: scale(0.8)
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes visitedNode {
+    0% {
+        transform: scale(1.5);
+        border-radius: 100%;
+        background-color: #3e5d72;
+    }
+
+    50% {
+        transform: scale(0.8);
+        background-color: #3c7e65;
+    }
+
+    75% {
+        background-color: #5f7b8e;
     }
 
     100% {

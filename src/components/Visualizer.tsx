@@ -7,7 +7,7 @@ import { AbstractGenerator } from "../generators";
 import { AbstractEventType } from "../events";
 
 export const ROWS = 27;
-export const COLUMNS = 69;
+export const COLUMNS = 51;
 
 interface VisualizerProps {
   strategy: AbstractStrategy;
@@ -45,9 +45,9 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
     runGenerating(generator);
   };
 
-  const onClearClickHandler = (): void => {
+  const onClearClickHandler = (clearWalls: boolean): void => {
     if (isLoading || isGenerating) return;
-    clearPathfidning();
+    clearPathfidning(clearWalls);
   };
 
   return (
@@ -57,7 +57,7 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
           className="visualizer-item"
           style={{
             backgroundColor:
-              isVisualizing || isGenerating ? "#c12362" : "#5cc9cb",
+              isVisualizing || isGenerating ? "#c96567" : "#314455",
           }}
           onClick={onVisualizerClickHandler}
         >
@@ -67,7 +67,7 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
           className="visualizer-item"
           style={{
             backgroundColor:
-              isVisualizing || isGenerating ? "#c12362" : "#3e5d72",
+              isVisualizing || isGenerating ? "#c96567" : "#644e5b",
           }}
           onClick={onGeneratorClickHandler}
         >
@@ -76,11 +76,20 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
         <div
           className="visualizer-item"
           style={{
-            backgroundColor: isLoading || isGenerating ? "#c12362" : "#0f8b6a",
+            backgroundColor: isLoading || isGenerating ? "#c96567" : "#97aabd",
           }}
-          onClick={onClearClickHandler}
+          onClick={onClearClickHandler.bind(null, true)}
         >
-          <span>Clear</span>
+          <span>Clear Board</span>
+        </div>
+        <div
+          className="visualizer-item"
+          style={{
+            backgroundColor: isLoading || isGenerating ? "#c96567" : "#97aabd",
+          }}
+          onClick={onClearClickHandler.bind(null, false)}
+        >
+          <span>Clear Visualization</span>
         </div>
       </div>
       <div className="visualizer-grid">

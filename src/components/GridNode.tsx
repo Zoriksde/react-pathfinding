@@ -19,8 +19,8 @@ const GridNode = ({ row, column, nodeType, onClick }: GridNodeProps) => {
       ${nodeType === NodeType.PATH_VISITED && "visited-node"}`}
       onClick={onClick.bind(null, row, column)}
       style={{
-        borderBottom: row === ROWS - 1 ? "1px solid #2528316a" : "none",
-        borderRight: column === COLUMNS - 1 ? "1px solid #2528316a" : "none",
+        borderBottom: row === ROWS - 1 ? "1px solid #15171c6a" : "none",
+        borderRight: column === COLUMNS - 1 ? "1px solid #15171c6a" : "none",
       }}
     />
   );

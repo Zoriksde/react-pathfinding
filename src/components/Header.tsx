@@ -32,21 +32,21 @@ const Header = ({
         dropdownActive={strategy}
         dropdownItems={headerStrategies}
         onItemClick={onStrategyClick}
-        activeColor="#5cc9cb"
-      />
-
-      <Dropdown
-        dropdownActive={eventType}
-        dropdownItems={headerEvents}
-        onItemClick={onEventTypeClick}
-        activeColor="#0f8b6a"
+        activeColor="#314455"
       />
 
       <Dropdown
         dropdownActive={generator}
         dropdownItems={headerMazeGenerators}
         onItemClick={onGeneratorClick}
-        activeColor="#3e5d72"
+        activeColor="#644e5b"
+      />
+
+      <Dropdown
+        dropdownActive={eventType}
+        dropdownItems={headerEvents}
+        onItemClick={onEventTypeClick}
+        activeColor="#97aabd"
       />
     </header>
   );

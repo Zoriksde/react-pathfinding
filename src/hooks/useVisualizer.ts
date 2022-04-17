@@ -170,7 +170,7 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
   };
 
   // Clears whole grid with intial source and destination nodes
-  const clearPathfidning = (): void => {
+  const clearPathfidning = (clearWalls: boolean = true): void => {
     setVisualizationGrid((prevVisualizationGrid) => {
       const updatedVisualizationGrid = [...prevVisualizationGrid];
 
@@ -184,7 +184,8 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
                 node.column === pathDestination.column)
             )
           )
-            node.setNodeType(NodeType.PATH_UNUSED);
+            if (!clearWalls && node.nodeType === NodeType.PATH_WALL) return;
+            else node.setNodeType(NodeType.PATH_UNUSED);
         })
       );
 

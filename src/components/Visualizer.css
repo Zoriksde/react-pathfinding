@@ -36,27 +36,3 @@
 .visualizer-row {
     display: flex;
 }
-
-@media screen and (max-width: 1640px) {
-    .visualizer-item {
-        font-size: 11px;
-        padding: 14px;
-    }
-}
-
-@media screen and (max-width: 1240px) {
-    .visualizer-menu {
-        justify-content: center;
-        padding: 10px;
-    }
-    
-    .visualizer-item {
-        font-size: 14px;
-        padding: 18px;
-    }
-
-    .visualizer-grid {
-        margin: 12px 0 ;
-    }
-
-}

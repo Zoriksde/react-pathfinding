@@ -4,4 +4,5 @@ export * from "./DijkstraStrategy";
 export * from "./BestFirstSearch";
 export * from "./AStarStrategy";
 export * from "./AbstractStrategy";
+export * from "./RandomizedDFSStrategy";
 export * from "./Node";

@@ -14,6 +14,7 @@ import {
   DijkstraStrategy,
   BestFirstSearch,
   AStarStrategy,
+  RandomizedDFSStrategy,
 } from "../strategies";
 
 // Strategies that should be displayed in header
@@ -23,6 +24,7 @@ export const headerStrategies = [
   new DijkstraStrategy(),
   new BestFirstSearch(),
   new AStarStrategy(),
+  new RandomizedDFSStrategy(),
 ];
 
 // Event types that should be displayed in header

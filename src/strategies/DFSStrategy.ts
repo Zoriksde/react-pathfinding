@@ -7,7 +7,7 @@ export class DFSStrategy extends AbstractStrategy {
     super("Depth First Search");
   }
 
-  runPathfinding(source: Node, destination: Node): [Node[], Node[]] {
+  runPathfinding(source: Node, destination: Node): [Node[], number[], Node[]] {
     const stack = [source];
     const visited: boolean[][] = [];
     const parents: (Node | undefined)[][] = [];
@@ -43,7 +43,7 @@ export class DFSStrategy extends AbstractStrategy {
         resultPath.pop();
         visitedNodes.pop();
         visitedNodes.shift();
-        return [visitedNodes, resultPath];
+        return [visitedNodes, [0], resultPath];
       }
 
       currentNode?.neighbours.forEach((neighbour) => {
@@ -59,6 +59,6 @@ export class DFSStrategy extends AbstractStrategy {
     }
 
     visitedNodes.shift();
-    return [visitedNodes, []];
+    return [visitedNodes, [0], []];
   }
 }

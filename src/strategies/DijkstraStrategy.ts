@@ -8,7 +8,7 @@ export class DijkstraStrategy extends AbstractStrategy {
     super("Dijkstra");
   }
 
-  runPathfinding(source: Node, destination: Node): [Node[], Node[]] {
+  runPathfinding(source: Node, destination: Node): [Node[], number[], Node[]] {
     const distances: number[][] = [];
     const visited: boolean[][] = [];
     const parents: (Node | undefined)[][] = [];
@@ -68,7 +68,7 @@ export class DijkstraStrategy extends AbstractStrategy {
 
     if (distances[destination.row][destination.column] === 1e4) {
       visitedNodes.shift();
-      return [visitedNodes, []];
+      return [visitedNodes, [0], []];
     }
 
     const resultPath: Node[] = [];
@@ -84,6 +84,6 @@ export class DijkstraStrategy extends AbstractStrategy {
 
     visitedNodes.pop();
     visitedNodes.shift();
-    return [visitedNodes, resultPath];
+    return [visitedNodes, [0], resultPath];
   }
 }

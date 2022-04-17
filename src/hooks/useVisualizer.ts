@@ -113,7 +113,11 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
       destinationNode
     );
 
-    const visualizationNodes = [...pathfindingPath[0], ...pathfindingPath[1]];
+    const visualizationNodes = [
+      ...pathfindingPath[0],
+      ...pathfindingPath[1],
+      ...pathfindingPath[2],
+    ];
     let currentNodeType = NodeType.PATH_VISITED;
 
     if (visualizationNodes.length === 0) setIsLoading(false);
@@ -123,12 +127,11 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
         setVisualizationGrid((prevVisualizationGrid) => {
           const updatedVisualizationGrid = [...prevVisualizationGrid];
 
-          if (pathNode.nodeType === currentNodeType)
-            currentNodeType = NodeType.PATH_VISUALIZED;
-
-          updatedVisualizationGrid[pathNode.row][pathNode.column].setNodeType(
-            currentNodeType
-          );
+          if (pathNode === 0) currentNodeType = NodeType.PATH_VISUALIZED;
+          else if (pathNode instanceof Node)
+            updatedVisualizationGrid[pathNode.row][pathNode.column].setNodeType(
+              currentNodeType
+            );
 
           if (_i === visualizationNodes.length - 1) setIsLoading(false);
           return updatedVisualizationGrid;

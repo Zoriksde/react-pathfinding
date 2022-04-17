@@ -8,7 +8,7 @@ export class AStarStrategy extends AbstractStrategy {
     super("A*");
   }
 
-  runPathfinding(source: Node, destination: Node): [Node[], Node[]] {
+  runPathfinding(source: Node, destination: Node): [Node[], number[], Node[]] {
     const parents: (Node | undefined)[][] = [];
     const visited: boolean[][] = [];
 
@@ -51,7 +51,7 @@ export class AStarStrategy extends AbstractStrategy {
         visitedNodes.pop();
         visitedNodes.shift();
 
-        return [visitedNodes, resultPath];
+        return [visitedNodes, [0], resultPath];
       }
 
       currentNode.neighbours.forEach((neighbour) => {
@@ -75,7 +75,7 @@ export class AStarStrategy extends AbstractStrategy {
     }
 
     visitedNodes.shift();
-    return [visitedNodes, []];
+    return [visitedNodes, [0], []];
   }
 
   // Manhattan distance heuristic

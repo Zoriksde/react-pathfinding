@@ -1,7 +1,6 @@
 import { COLUMNS, ROWS } from "../components/Visualizer";
 import { AbstractStrategy } from "./AbstractStrategy";
-import { NodeType } from "./EventType";
-import { Node } from "./Node";
+import { Node, NodeType } from "./Node";
 
 export class BFSStrategy extends AbstractStrategy {
   constructor() {

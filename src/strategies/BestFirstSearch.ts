@@ -1,8 +1,7 @@
 import { COLUMNS, ROWS } from "../components/Visualizer";
 import { PriorityQueue } from "../structures";
 import { AbstractStrategy } from "./AbstractStrategy";
-import { NodeType } from "./EventType";
-import { Node } from "./Node";
+import { Node, NodeType } from "./Node";
 
 export class BestFirstSearch extends AbstractStrategy {
   constructor() {

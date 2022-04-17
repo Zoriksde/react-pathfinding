@@ -1,15 +1,16 @@
 import { useState } from "react";
-import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
 import Visualizer from "./components/Visualizer";
 import { AbstractGenerator, BasicRandomMazeGenerator } from "./generators";
-import { BFSStrategy, AbstractStrategy, EventType } from "./strategies";
+import { BFSStrategy, AbstractStrategy } from "./strategies";
+import { AbstractEventType, PathSourceEventType } from "./events";
 
 const App = () => {
   const [currentStrategy, setCurrentStrategy] = useState<AbstractStrategy>(
     new BFSStrategy()
   );
-  const [currentEventType, setCurrentEventType] = useState<EventType>(
-    EventType.PATH_SOURCE
+  const [currentEventType, setCurrentEventType] = useState<AbstractEventType>(
+    new PathSourceEventType()
   );
 
   const [currentGenerator, setCurrentGenerator] = useState<AbstractGenerator>(
@@ -20,20 +21,20 @@ const App = () => {
     setCurrentStrategy(strategy);
   };
 
-  const onEventTypeClickHandler = (eventType: EventType): void => {
+  const onEventTypeClickHandler = (eventType: AbstractEventType): void => {
     setCurrentEventType(eventType);
   };
 
-  const onGeneratorTypeClickHandler = (generator: AbstractGenerator): void => {
+  const onGeneratorClickHandler = (generator: AbstractGenerator): void => {
     setCurrentGenerator(generator);
   };
 
   return (
     <div className="app">
-      <Sidebar
+      <Header
         onStrategyClick={onStrategyClickHandler}
         onEventTypeClick={onEventTypeClickHandler}
-        onGeneratorTypeClick={onGeneratorTypeClickHandler}
+        onGeneratorClick={onGeneratorClickHandler}
         strategy={currentStrategy}
         eventType={currentEventType}
         generator={currentGenerator}

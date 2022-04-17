@@ -1,4 +1,4 @@
-import { Node } from "../strategies/Node";
+import { Node } from "../strategies";
 
 type ComparatorFunction = (a: PQEntry, b: PQEntry) => boolean;
 

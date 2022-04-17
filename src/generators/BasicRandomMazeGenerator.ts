@@ -9,7 +9,7 @@ export class BasicRandomMazeGenerator extends AbstractGenerator {
 
   generate(grid: Node[][]): Node[] {
     const resultGrid: Node[] = [];
-    const numberOfElements = Math.floor((ROWS * COLUMNS) / 6);
+    const numberOfElements = Math.floor((ROWS * COLUMNS) / 4);
 
     for (let element = 0; element < numberOfElements; element++) {
       const currentRow = Math.floor(Math.random() * ROWS);

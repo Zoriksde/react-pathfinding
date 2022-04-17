@@ -1,17 +1,17 @@
-import { EventType } from "../strategies";
 import { usePathfinding } from "../hooks/usePathfinding";
 import { useVisualizer } from "../hooks/useVisualizer";
 import { AbstractStrategy } from "../strategies";
 import GridNode from "./GridNode";
 import "./Visualizer.css";
 import { AbstractGenerator } from "../generators";
+import { AbstractEventType } from "../events";
 
 export const ROWS = 27;
-export const COLUMNS = 51;
+export const COLUMNS = 69;
 
 interface VisualizerProps {
   strategy: AbstractStrategy;
-  eventType: EventType;
+  eventType: AbstractEventType;
   generator: AbstractGenerator;
 }
 

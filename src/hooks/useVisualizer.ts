@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { AbstractGenerator } from "../generators";
-import { AbstractStrategy, EventType, NodeType } from "../strategies";
-import { Node } from "../strategies/Node";
+import { AbstractStrategy } from "../strategies";
+import { Node, NodeType } from "../strategies";
+import { AbstractEventType, EventType } from "../events";
 
 interface VisualizerHookArgs {
   grid: Node[][];
@@ -51,7 +52,7 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
   const setNodeAction = (
     row: number,
     column: number,
-    eventType: EventType
+    eventType: AbstractEventType
   ): void => {
     setVisualizationGrid((prevVisualizationGrid) => {
       const updatedVisualizationGrid = [...prevVisualizationGrid];
@@ -61,11 +62,11 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
       )
         return updatedVisualizationGrid;
 
-      if (eventType === EventType.PATH_WALLS)
+      if (eventType.eventType === EventType.PATH_WALLS)
         updatedVisualizationGrid[row][column].setNodeType(NodeType.PATH_WALL);
-      else if (eventType === EventType.PATH_SOURCE)
+      else if (eventType.eventType === EventType.PATH_SOURCE)
         changePathNodes(row, column, NodeType.PATH_SOURCE);
-      else if (eventType === EventType.PATH_DESTINATION)
+      else if (eventType.eventType === EventType.PATH_DESTINATION)
         changePathNodes(row, column, NodeType.PATH_DESTINATION);
 
       return updatedVisualizationGrid;

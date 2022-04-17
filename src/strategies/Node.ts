@@ -1,4 +1,11 @@
-import { NodeType } from "./EventType";
+export enum NodeType {
+  PATH_SOURCE,
+  PATH_DESTINATION,
+  PATH_WALL,
+  PATH_UNUSED,
+  PATH_VISUALIZED,
+  PATH_VISITED,
+}
 
 export class Node {
   public neighbours: Node[];

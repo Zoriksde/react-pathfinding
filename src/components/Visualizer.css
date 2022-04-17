@@ -1,15 +1,17 @@
 .visualizer {
     display: flex;
     flex-direction: column;
-    flex: 14;
+    gap: 24px;
 }
 
 .visualizer-menu {
     background-color: #15171c;
     display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    padding-right: 12px;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding-bottom: 12px;
 }
 
 .visualizer-item {
@@ -29,7 +31,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: auto 0;
 }
 
 .visualizer-row {

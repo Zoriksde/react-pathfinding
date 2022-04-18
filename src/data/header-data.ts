@@ -7,6 +7,7 @@ import {
   BasicRandomMazeGenerator,
   RandomWallsGenerator,
   RecursionDivisionGenerator,
+  RandomizedDFSGenerator,
 } from "../generators";
 import {
   BFSStrategy,
@@ -39,4 +40,5 @@ export const headerMazeGenerators = [
   new BasicRandomMazeGenerator(),
   new RecursionDivisionGenerator(),
   new RandomWallsGenerator(),
+  new RandomizedDFSGenerator(),
 ];

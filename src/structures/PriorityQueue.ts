@@ -45,6 +45,15 @@ export class PriorityQueue {
     return polledNode;
   }
 
+  contains(node: Node): boolean {
+    return (
+      this.heap.filter(
+        (entry) =>
+          entry.node.row === node.row && entry.node.column === node.column
+      ).length > 0
+    );
+  }
+
   private siftUp(): void {
     let currentNode = this.heap.length - 1;
 

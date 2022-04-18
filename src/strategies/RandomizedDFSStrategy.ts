@@ -8,42 +8,29 @@ export class RandomizedDFSStrategy extends AbstractStrategy {
   }
 
   runPathfinding(source: Node, destination: Node): [Node[], number[], Node[]] {
-    const stack = [source];
-    const visited: boolean[][] = [];
     const parents: (Node | undefined)[][] = [];
-
+    const visited: boolean[][] = [];
     const visitedNodes: Node[] = [];
 
-    for (let row = 0; row < ROWS; row++) {
-      visited.push([]);
-      parents.push([]);
+    this.initContainers(parents, visited);
 
-      for (let column = 0; column < COLUMNS; column++) {
-        visited[row].push(false);
-        parents[row].push(undefined);
-      }
-    }
-
-    visited[source.row][source.column] = true;
+    const stack: Node[] = [];
+    stack.push(source);
     parents[source.row][source.column] = source;
+    visited[source.row][source.column] = true;
 
     while (stack.length > 0) {
-      let currentNode = stack.pop();
+      const currentNode = stack.pop();
+      if (currentNode === undefined) return [visitedNodes, [0], []];
 
-      if (currentNode !== undefined) visitedNodes.push(currentNode);
+      visitedNodes.push(currentNode);
 
       if (
-        currentNode?.row === destination.row &&
-        currentNode?.column === destination.column
+        currentNode.row === destination.row &&
+        currentNode.column === destination.column
       ) {
-        const resultPath: Node[] = [];
+        const resultPath = this.reconstruthPath(parents, currentNode, source);
 
-        while (currentNode !== source && currentNode !== undefined) {
-          resultPath.unshift(currentNode);
-          currentNode = parents[currentNode.row][currentNode.column];
-        }
-
-        resultPath.pop();
         visitedNodes.pop();
         visitedNodes.shift();
         return [visitedNodes, [0], resultPath];
@@ -51,15 +38,16 @@ export class RandomizedDFSStrategy extends AbstractStrategy {
 
       let currentNeighbours: Node[] = [];
 
-      currentNode?.neighbours.forEach((neighbour) => {
+      currentNode.neighbours.forEach((neighbour) => {
         if (
-          !visited[neighbour.row][neighbour.column] &&
-          neighbour.nodeType !== NodeType.PATH_WALL
-        ) {
-          visited[neighbour.row][neighbour.column] = true;
-          parents[neighbour.row][neighbour.column] = currentNode;
-          currentNeighbours.push(neighbour);
-        }
+          visited[neighbour.row][neighbour.column] ||
+          neighbour.nodeType === NodeType.PATH_WALL
+        )
+          return;
+        parents[neighbour.row][neighbour.column] = currentNode;
+        visited[neighbour.row][neighbour.column] = true;
+
+        currentNeighbours.push(neighbour);
       });
 
       while (currentNeighbours.length > 0) {
@@ -73,6 +61,21 @@ export class RandomizedDFSStrategy extends AbstractStrategy {
 
     visitedNodes.shift();
     return [visitedNodes, [0], []];
+  }
+
+  private initContainers(
+    parents: (Node | undefined)[][],
+    visited: boolean[][]
+  ): void {
+    for (let row = 0; row < ROWS; row++) {
+      parents.push([]);
+      visited.push([]);
+
+      for (let column = 0; column < COLUMNS; column++) {
+        parents[row].push(undefined);
+        visited[row].push(false);
+      }
+    }
   }
 
   private randomNeighbour(neighbours: number): number {

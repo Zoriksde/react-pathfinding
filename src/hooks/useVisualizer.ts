@@ -126,7 +126,6 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
       setTimeout(() => {
         setVisualizationGrid((prevVisualizationGrid) => {
           const updatedVisualizationGrid = [...prevVisualizationGrid];
-
           if (pathNode === 0) currentNodeType = NodeType.PATH_VISUALIZED;
           else if (pathNode instanceof Node)
             updatedVisualizationGrid[pathNode.row][pathNode.column].setNodeType(

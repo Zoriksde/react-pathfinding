@@ -10,72 +10,72 @@ export class AStarStrategy extends AbstractStrategy {
 
   runPathfinding(source: Node, destination: Node): [Node[], number[], Node[]] {
     const parents: (Node | undefined)[][] = [];
-    const visited: boolean[][] = [];
-
+    const costs: number[][] = [];
     const visitedNodes: Node[] = [];
+
+    this.initContainers(parents, costs);
 
     const priorityQueue = new PriorityQueue();
     priorityQueue.push({ node: source, priority: 0 });
-
-    for (let row = 0; row < ROWS; row++) {
-      visited.push([]);
-      parents.push([]);
-
-      for (let column = 0; column < COLUMNS; column++) {
-        visited[row].push(false);
-        parents[row].push(undefined);
-      }
-    }
-
     parents[source.row][source.column] = source;
-    visited[source.row][source.column] = true;
+    costs[source.row][source.column] = 0;
 
     while (!priorityQueue.isEmpty()) {
       const currentEntry = priorityQueue.poll();
-      let currentNode: Node | undefined = currentEntry.node;
-
+      const currentNode = currentEntry.node;
       visitedNodes.push(currentNode);
 
       if (
         currentNode.row === destination.row &&
         currentNode.column === destination.column
       ) {
-        const resultPath: Node[] = [];
+        const resultPath = this.reconstruthPath(parents, currentNode, source);
 
-        while (currentNode !== source && currentNode !== undefined) {
-          resultPath.unshift(currentNode);
-          currentNode = parents[currentNode.row][currentNode.column];
-        }
-
-        resultPath.pop();
         visitedNodes.pop();
         visitedNodes.shift();
-
         return [visitedNodes, [0], resultPath];
       }
 
       currentNode.neighbours.forEach((neighbour) => {
-        if (
-          visited[neighbour.row][neighbour.column] ||
-          neighbour.nodeType === NodeType.PATH_WALL
-        )
-          return;
-        parents[neighbour.row][neighbour.column] = currentNode;
-        visited[neighbour.row][neighbour.column] = true;
-        priorityQueue.push({
-          node: neighbour,
-          priority: this.getHeuristic(
-            neighbour.row,
-            neighbour.column,
-            destination.row,
-            destination.column
-          ),
-        });
+        if (neighbour.nodeType === NodeType.PATH_WALL) return;
+
+        const currentCost = costs[currentNode.row][currentNode.column] + 1;
+        if (currentCost < costs[neighbour.row][neighbour.column]) {
+          parents[neighbour.row][neighbour.column] = currentNode;
+          costs[neighbour.row][neighbour.column] = currentCost;
+          if (!priorityQueue.contains(neighbour))
+            priorityQueue.push({
+              node: neighbour,
+              priority:
+                costs[neighbour.row][neighbour.column] +
+                this.getHeuristic(
+                  neighbour.row,
+                  neighbour.column,
+                  destination.row,
+                  destination.column
+                ),
+            });
+        }
       });
     }
 
     visitedNodes.shift();
     return [visitedNodes, [0], []];
+  }
+
+  private initContainers(
+    parents: (Node | undefined)[][],
+    costs: number[][]
+  ): void {
+    for (let row = 0; row < ROWS; row++) {
+      parents.push([]);
+      costs.push([]);
+
+      for (let column = 0; column < COLUMNS; column++) {
+        parents[row].push(undefined);
+        costs[row].push(1e4);
+      }
+    }
   }
 
   // Manhattan distance heuristic

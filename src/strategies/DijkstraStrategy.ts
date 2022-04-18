@@ -9,34 +9,25 @@ export class DijkstraStrategy extends AbstractStrategy {
   }
 
   runPathfinding(source: Node, destination: Node): [Node[], number[], Node[]] {
-    const distances: number[][] = [];
-    const visited: boolean[][] = [];
     const parents: (Node | undefined)[][] = [];
-
+    const costs: number[][] = [];
+    const visited: boolean[][] = [];
     const visitedNodes: Node[] = [];
+    let intersectionNode = destination;
+
+    this.initContainers(parents, costs, visited);
 
     const priorityQueue = new PriorityQueue();
     priorityQueue.push({ node: source, priority: 0 });
-
-    for (let row = 0; row < ROWS; row++) {
-      distances.push([]);
-      visited.push([]);
-      parents.push([]);
-
-      for (let column = 0; column < COLUMNS; column++) {
-        visited[row].push(false);
-        distances[row].push(1e4);
-        parents[row].push(undefined);
-      }
-    }
-
+    parents[source.row][source.column] = source;
+    costs[source.row][source.column] = 0;
     visited[source.row][source.column] = true;
-    distances[source.row][source.column] = 0;
 
     while (!priorityQueue.isEmpty()) {
       const currentEntry = priorityQueue.poll();
       const currentNode = currentEntry.node;
       visitedNodes.push(currentNode);
+      intersectionNode = currentNode;
 
       if (
         currentNode.row === destination.row &&
@@ -45,9 +36,7 @@ export class DijkstraStrategy extends AbstractStrategy {
         break;
 
       visited[currentNode.row][currentNode.column] = true;
-      if (
-        distances[currentNode.row][currentNode.column] < currentEntry.priority
-      )
+      if (costs[currentNode.row][currentNode.column] < currentEntry.priority)
         continue;
 
       currentNode.neighbours.forEach((neighbour) => {
@@ -56,34 +45,42 @@ export class DijkstraStrategy extends AbstractStrategy {
           neighbour.nodeType === NodeType.PATH_WALL
         )
           return;
-        const currentDistance =
-          distances[currentNode.row][currentNode.column] + 1;
-        if (currentDistance < distances[neighbour.row][neighbour.column]) {
-          distances[neighbour.row][neighbour.column] = currentDistance;
+
+        const currentCost = costs[currentNode.row][currentNode.column] + 1;
+        if (currentCost < costs[neighbour.row][neighbour.column]) {
           parents[neighbour.row][neighbour.column] = currentNode;
-          priorityQueue.push({ node: neighbour, priority: currentDistance });
+          costs[neighbour.row][neighbour.column] = currentCost;
+          priorityQueue.push({ node: neighbour, priority: currentCost });
         }
       });
     }
 
-    if (distances[destination.row][destination.column] === 1e4) {
+    if (costs[destination.row][destination.column] === 1e4) {
       visitedNodes.shift();
       return [visitedNodes, [0], []];
     }
 
-    const resultPath: Node[] = [];
-    let currentNode: Node | undefined =
-      parents[destination.row][destination.column];
-
-    while (currentNode !== undefined) {
-      resultPath.unshift(currentNode);
-      currentNode = parents[currentNode.row][currentNode.column];
-    }
-
-    resultPath.shift();
-
-    visitedNodes.pop();
+    const resultPath = this.reconstruthPath(parents, intersectionNode, source);
     visitedNodes.shift();
+    visitedNodes.pop();
     return [visitedNodes, [0], resultPath];
+  }
+
+  private initContainers(
+    parents: (Node | undefined)[][],
+    costs: number[][],
+    visited: boolean[][]
+  ): void {
+    for (let row = 0; row < ROWS; row++) {
+      parents.push([]);
+      costs.push([]);
+      visited.push([]);
+
+      for (let column = 0; column < COLUMNS; column++) {
+        parents[row].push(undefined);
+        costs[row].push(1e4);
+        visited[row].push(false);
+      }
+    }
   }
 }

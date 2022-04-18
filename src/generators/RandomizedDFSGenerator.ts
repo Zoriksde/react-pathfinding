@@ -9,31 +9,27 @@ export class RandomizedDFSGenerator extends AbstractGenerator {
 
   generate(grid: Node[][]): Node[] {
     const visited: boolean[][] = [];
+    const resultGrid: Node[] = [];
 
-    const maxPathLength = COLUMNS / 2 + ROWS / 2;
+    const maxPathLength = COLUMNS * ROWS * 0.05;
     const startNodes = ROWS / 4;
 
-    let visitedNodes: Node[] = [];
-
-    for (let row = 0; row < ROWS; row++) {
-      visited.push([]);
-
-      for (let column = 0; column < COLUMNS; column++) {
-        visited[row].push(false);
-      }
-    }
+    this.initContainers(visited);
 
     for (let startNode = 0; startNode < startNodes; startNode++) {
       const randomNode =
         grid[this.randomNumber(0, ROWS - 1)][this.randomNumber(0, COLUMNS - 1)];
 
-      visitedNodes = [
-        ...visitedNodes,
-        ...this.singleDFS(randomNode, visited, maxPathLength),
-      ];
+      const currentDFSTravelsal = this.singleDFS(
+        randomNode,
+        visited,
+        maxPathLength
+      );
+
+      currentDFSTravelsal.forEach((dfsNode) => resultGrid.push(dfsNode));
     }
 
-    return visitedNodes;
+    return resultGrid;
   }
 
   private singleDFS(
@@ -41,28 +37,31 @@ export class RandomizedDFSGenerator extends AbstractGenerator {
     visited: boolean[][],
     maxPathLength: number
   ): Node[] {
-    const stack = [node];
+    const stack: Node[] = [];
     const visitedNodes: Node[] = [];
-    let pathLength = 1;
+    let pathLength = 0;
+
+    stack.push(node);
     visited[node.row][node.column] = true;
 
     while (stack.length > 0) {
       const currentNode = stack.pop();
-      pathLength++;
-      if (currentNode) visitedNodes.push(currentNode);
+      if (currentNode === undefined) return [];
 
-      if (pathLength > maxPathLength) {
-        return visitedNodes;
-      }
+      visitedNodes.push(currentNode);
+      pathLength++;
+
+      if (pathLength > maxPathLength) return visitedNodes;
 
       let currentNeighbours: Node[] = [];
-      currentNode?.neighbours.forEach((neighbour) => {
+      currentNode.neighbours.forEach((neighbour) => {
         if (
           visited[neighbour.row][neighbour.column] ||
           neighbour.nodeType === NodeType.PATH_WALL
         )
           return;
         visited[neighbour.row][neighbour.column] = true;
+
         currentNeighbours.push(neighbour);
       });
 
@@ -76,6 +75,16 @@ export class RandomizedDFSGenerator extends AbstractGenerator {
     }
 
     return visitedNodes;
+  }
+
+  private initContainers(visited: boolean[][]): void {
+    for (let row = 0; row < ROWS; row++) {
+      visited.push([]);
+
+      for (let column = 0; column < COLUMNS; column++) {
+        visited[row].push(false);
+      }
+    }
   }
 
   private randomNeighbour(neighbours: number): number {

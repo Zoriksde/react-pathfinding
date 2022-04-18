@@ -9,45 +9,28 @@ export class BestFirstSearch extends AbstractStrategy {
   }
 
   runPathfinding(source: Node, destination: Node): [Node[], number[], Node[]] {
-    const visited: boolean[][] = [];
     const parents: (Node | undefined)[][] = [];
+    const visited: boolean[][] = [];
+    const visitedNodes: Node[] = [];
+
+    this.initContainers(parents, visited);
 
     const priorityQueue = new PriorityQueue();
     priorityQueue.push({ node: source, priority: 0 });
-
-    const visitedNodes: Node[] = [];
-
-    for (let row = 0; row < ROWS; row++) {
-      visited.push([]);
-      parents.push([]);
-
-      for (let column = 0; column < COLUMNS; column++) {
-        visited[row].push(false);
-        parents[row].push(undefined);
-      }
-    }
-
-    visited[source.row][source.column] = true;
     parents[source.row][source.column] = source;
+    visited[source.row][source.column] = true;
 
     while (!priorityQueue.isEmpty()) {
       const currentEntry = priorityQueue.poll();
-      let currentNode: Node | undefined = currentEntry.node;
-
+      const currentNode = currentEntry.node;
       visitedNodes.push(currentNode);
 
       if (
         currentNode.row === destination.row &&
         currentNode.column === destination.column
       ) {
-        const resultPath: Node[] = [];
+        const resultPath = this.reconstruthPath(parents, currentNode, source);
 
-        while (currentNode !== source && currentNode !== undefined) {
-          resultPath.unshift(currentNode);
-          currentNode = parents[currentNode.row][currentNode.column];
-        }
-
-        resultPath.pop();
         visitedNodes.pop();
         visitedNodes.shift();
         return [visitedNodes, [0], resultPath];
@@ -60,8 +43,9 @@ export class BestFirstSearch extends AbstractStrategy {
         )
           return;
 
-        visited[neighbour.row][neighbour.column] = true;
         parents[neighbour.row][neighbour.column] = currentNode;
+        visited[neighbour.row][neighbour.column] = true;
+
         priorityQueue.push({
           node: neighbour,
           priority: this.getHeuristic(
@@ -76,6 +60,21 @@ export class BestFirstSearch extends AbstractStrategy {
 
     visitedNodes.shift();
     return [visitedNodes, [0], []];
+  }
+
+  private initContainers(
+    parents: (Node | undefined)[][],
+    visited: boolean[][]
+  ): void {
+    for (let row = 0; row < ROWS; row++) {
+      parents.push([]);
+      visited.push([]);
+
+      for (let column = 0; column < COLUMNS; column++) {
+        parents[row].push(undefined);
+        visited[row].push(false);
+      }
+    }
   }
 
   // Manhattan distance heuristic

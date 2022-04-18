@@ -141,6 +141,7 @@ export class RecursionDivisionGenerator extends AbstractGenerator {
     criteria: RandomCriteria
   ): number {
     const randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
+
     if (criteria === RandomCriteria.RANDOM_EVEN && randomNumber % 2 !== 0) {
       return randomNumber === min ? randomNumber + 1 : randomNumber - 1;
     } else if (

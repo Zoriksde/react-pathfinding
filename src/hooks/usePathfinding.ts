@@ -36,10 +36,10 @@ export const usePathfinding = ({ rows, columns }: PathfindingHookArgs) => {
     (currentGrid: Node[][], row: number, column: number): Node[] => {
       const neighbours: Node[] = [];
 
-      if (row > 0) neighbours.push(currentGrid[row - 1][column]);
-      if (row < rows - 1) neighbours.push(currentGrid[row + 1][column]);
       if (column > 0) neighbours.push(currentGrid[row][column - 1]);
+      if (row < rows - 1) neighbours.push(currentGrid[row + 1][column]);
       if (column < columns - 1) neighbours.push(currentGrid[row][column + 1]);
+      if (row > 0) neighbours.push(currentGrid[row - 1][column]);
 
       return neighbours;
     },

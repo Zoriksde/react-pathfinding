@@ -3,6 +3,7 @@ import { AbstractGenerator } from "../generators";
 import { AbstractStrategy } from "../strategies";
 import { Node, NodeType } from "../strategies";
 import { AbstractEventType, EventType } from "../events";
+import { AbstractOperation, OperationType } from "../operations";
 
 interface VisualizerHookArgs {
   grid: Node[][];
@@ -101,7 +102,10 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
   };
 
   // Runs current strategy on grid
-  const runPathfinding = (strategy: AbstractStrategy): void => {
+  const runPathfinding = (
+    strategy: AbstractStrategy,
+    operation: AbstractOperation
+  ): void => {
     setIsVisualizing(true);
     setIsLoading(true);
 
@@ -113,11 +117,18 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
       destinationNode
     );
 
-    const visualizationNodes = [
-      ...pathfindingPath[0],
-      ...pathfindingPath[1],
-      ...pathfindingPath[2],
-    ];
+    let visualizationNodes: (number | Node)[];
+
+    if (operation.operationType === OperationType.SHORTEST_PATH) {
+      visualizationNodes = [...pathfindingPath[1], ...pathfindingPath[2]];
+    } else {
+      visualizationNodes = [
+        ...pathfindingPath[0],
+        ...pathfindingPath[1],
+        ...pathfindingPath[2],
+      ];
+    }
+
     let currentNodeType = NodeType.PATH_VISITED;
 
     if (visualizationNodes.length === 0) setIsLoading(false);

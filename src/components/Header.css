@@ -1,7 +1,9 @@
 .header {
     background-color: #15171c;
-    height: 100vh;
     height: 80px;
+}
+
+.header-desktop {
     display: flex;
     justify-content: center;
     align-items: center;

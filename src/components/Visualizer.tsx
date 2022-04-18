@@ -5,6 +5,7 @@ import GridNode from "./GridNode";
 import "./Visualizer.css";
 import { AbstractGenerator } from "../generators";
 import { AbstractEventType } from "../events";
+import { AbstractOperation } from "../operations";
 
 export const ROWS = 27;
 export const COLUMNS = 51;
@@ -13,9 +14,15 @@ interface VisualizerProps {
   strategy: AbstractStrategy;
   eventType: AbstractEventType;
   generator: AbstractGenerator;
+  operation: AbstractOperation;
 }
 
-const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
+const Visualizer = ({
+  strategy,
+  eventType,
+  generator,
+  operation,
+}: VisualizerProps) => {
   const [grid] = usePathfinding({ rows: ROWS, columns: COLUMNS });
   const {
     visualizationGrid,
@@ -37,7 +44,7 @@ const Visualizer = ({ strategy, eventType, generator }: VisualizerProps) => {
 
   const onVisualizerClickHandler = (): void => {
     if (isVisualizing || isGenerating) return;
-    runPathfinding(strategy);
+    runPathfinding(strategy, operation);
   };
 
   const onGeneratorClickHandler = (): void => {

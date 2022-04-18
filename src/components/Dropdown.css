@@ -4,7 +4,7 @@
 }
 
 .dropdown-active {
-    width: 340px;
+    width: 290px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,8 +20,8 @@
     position: absolute;
     top: calc(100% + 5px);
     right: 0;
-    width: 340px;
-    max-width: 340px;
+    width: 290px;
+    max-width: 290px;
     padding: 12px;
     border-radius: 10px;
     background-color: #15171c;

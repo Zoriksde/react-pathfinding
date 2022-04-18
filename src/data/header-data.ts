@@ -9,6 +9,7 @@ import {
   RecursionDivisionGenerator,
   RandomizedDFSGenerator,
 } from "../generators";
+import { ShortestPathOperation, VisualizationOperation } from "../operations";
 import {
   BFSStrategy,
   DFSStrategy,
@@ -41,4 +42,10 @@ export const headerMazeGenerators = [
   new RecursionDivisionGenerator(),
   new RandomWallsGenerator(),
   new RandomizedDFSGenerator(),
+];
+
+// Types of operation that should be displayed in header
+export const headerOperations = [
+  new VisualizationOperation(),
+  new ShortestPathOperation(),
 ];

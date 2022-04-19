@@ -84,3 +84,33 @@
         transform: scale(1);
     }
 }
+
+@media screen and (max-width: 1480px) {
+    .grid-node {
+        width: 23px;
+        height: 23px;
+    }
+}
+
+
+@media screen and (max-width: 1180px) {
+    .grid-node {
+        width: 18px;
+        height: 18px;
+    }   
+}
+
+
+@media screen and (max-width: 980px) {
+    .grid-node {
+        width: 11px;
+        height: 11px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .grid-node {
+        width: 7px;
+        height: 7px;
+    }
+}

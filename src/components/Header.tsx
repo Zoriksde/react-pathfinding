@@ -10,6 +10,7 @@ import { AbstractGenerator } from "../generators";
 import Dropdown from "./Dropdown";
 import { AbstractEventType } from "../events";
 import { AbstractOperation } from "../operations";
+import { FaBars } from "react-icons/fa";
 
 interface HeaderProps {
   onStrategyClick: (strategy: AbstractStrategy) => void;
@@ -34,35 +35,33 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <header className="header">
-      <div className="header-desktop">
-        <Dropdown
-          dropdownActive={strategy}
-          dropdownItems={headerStrategies}
-          onItemClick={onStrategyClick}
-          activeColor="#314455"
-        />
+      <Dropdown
+        dropdownActive={strategy}
+        dropdownItems={headerStrategies}
+        onItemClick={onStrategyClick}
+        activeColor="#314455"
+      />
 
-        <Dropdown
-          dropdownActive={generator}
-          dropdownItems={headerMazeGenerators}
-          onItemClick={onGeneratorClick}
-          activeColor="#644e5b"
-        />
+      <Dropdown
+        dropdownActive={generator}
+        dropdownItems={headerMazeGenerators}
+        onItemClick={onGeneratorClick}
+        activeColor="#644e5b"
+      />
 
-        <Dropdown
-          dropdownActive={eventType}
-          dropdownItems={headerEvents}
-          onItemClick={onEventTypeClick}
-          activeColor="#97aabd"
-        />
+      <Dropdown
+        dropdownActive={eventType}
+        dropdownItems={headerEvents}
+        onItemClick={onEventTypeClick}
+        activeColor="#97aabd"
+      />
 
-        <Dropdown
-          dropdownActive={operation}
-          dropdownItems={headerOperations}
-          onItemClick={onOperationClick}
-          activeColor="#152d32"
-        />
-      </div>
+      <Dropdown
+        dropdownActive={operation}
+        dropdownItems={headerOperations}
+        onItemClick={onOperationClick}
+        activeColor="#152d32"
+      />
     </header>
   );
 };

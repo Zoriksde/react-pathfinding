@@ -1,12 +1,16 @@
 .header {
     background-color: #15171c;
     height: 80px;
-}
-
-.header-desktop {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 24px;
     padding-top: 12px;
+}
+
+@media screen and (max-width: 1180px) {
+ .header {
+     flex-direction: column;
+     height: 100%;
+ }
 }

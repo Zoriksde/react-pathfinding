@@ -18,9 +18,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 18px;
     color: #e1e9fc;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     margin-bottom: 12px;
@@ -35,4 +35,14 @@
 
 .visualizer-row {
     display: flex;
+}
+
+@media screen and (max-width: 1180px) {
+    .visualizer-menu {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: 100%;
+        gap: 12px;
+        padding: 12px;
+    }
 }

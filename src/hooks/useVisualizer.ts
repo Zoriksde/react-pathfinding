@@ -131,7 +131,7 @@ export const useVisualizer = ({ grid }: VisualizerHookArgs) => {
 
     let currentNodeType = NodeType.PATH_VISITED;
 
-    if (visualizationNodes.length === 0) setIsLoading(false);
+    // if (visualizationNodes.length === 0) setIsLoading(false);
 
     visualizationNodes.forEach((pathNode, _i) => {
       setTimeout(() => {

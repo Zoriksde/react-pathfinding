@@ -10,7 +10,6 @@ import { AbstractGenerator } from "../generators";
 import Dropdown from "./Dropdown";
 import { AbstractEventType } from "../events";
 import { AbstractOperation } from "../operations";
-import { FaBars } from "react-icons/fa";
 
 interface HeaderProps {
   onStrategyClick: (strategy: AbstractStrategy) => void;

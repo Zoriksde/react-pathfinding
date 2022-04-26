@@ -7,7 +7,7 @@ Project is written in ReactJS with Typescript with some CSS styling.
 In case if you want to run it on your local machine clone this repositry and then put
 ```npm install``` on your command line.
 
-If you wound like to look at this project online [visit pathfinding visualizer](https://react-pathfinding.vercel.app/)
+If you would like to look at this project online [visit pathfinding visualizer](https://react-pathfinding.vercel.app/)
 
 Project is written using OOP Principles and different Design Patterns, which makes it easy to maintain, extend, fix and change.
 Each algorithm is implemented as single class which inherits from abstract one (Strategy Design Pattern).

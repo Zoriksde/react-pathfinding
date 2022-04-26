@@ -1,46 +1,102 @@
-# Getting Started with Create React App
+# Pathfinding Visualizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Pathfinding Visualizer project that helps others to understand basic ideas behind pathfinding algorithms.
+What's more the pathfinding algorithms aren't the ones which are implemented. There is also a capability to generate some basic maze patterns.
+Project is written in ReactJS with Typescript with some CSS styling.
 
-## Available Scripts
+In case if you want to run it on your local machine clone this repositry and then put
+```npm install``` on your command line.
 
-In the project directory, you can run:
+If you wound like to look at this project online [visit pathfinding visualizer](https://react-pathfinding.vercel.app/)
 
-### `npm start`
+Project is written using OOP Principles and different Design Patterns, which makes it easy to maintain, extend, fix and change.
+Each algorithm is implemented as single class which inherits from abstract one (Strategy Design Pattern).
+The same concept is used in maze pattern generators algorithms.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Ex. of abstract strategy:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```ts 
+import { Node } from "./Node";
 
-### `npm test`
+export class AbstractStrategy {
+  constructor(public name: string) {}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  runPathfinding(source: Node, destination: Node): [Node[], number[], Node[]] {
+    return [[], [], []];
+  }
 
-### `npm run build`
+  protected reconstruthPath(
+    parents: (Node | undefined)[][],
+    currentNode: Node,
+    source: Node
+  ): Node[] {
+    const resultPath: Node[] = [];
+    let node: Node | undefined = currentNode;
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    while (node !== source && node !== undefined) {
+      resultPath.unshift(node);
+      if (node !== undefined) node = parents[node.row][node.column];
+    }
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    resultPath.pop();
+    return resultPath;
+  }
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Visualization is made with usage of custom hooks, css animation properties and setTimeout asynchronous function.
+After some interval of time specified nodes are assigned to different type of animation properties.
 
-### `npm run eject`
+Ex. of custom useVisualizer hook methods:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```ts
+ visualizationNodes.forEach((pathNode, _i) => {
+      setTimeout(() => {
+        setVisualizationGrid((prevVisualizationGrid) => {
+          const updatedVisualizationGrid = [...prevVisualizationGrid];
+          if (pathNode === 0) currentNodeType = NodeType.PATH_VISUALIZED;
+          else if (pathNode instanceof Node)
+            updatedVisualizationGrid[pathNode.row][pathNode.column].setNodeType(
+              currentNodeType
+            );
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+          if (_i === visualizationNodes.length - 1) setIsLoading(false);
+          return updatedVisualizationGrid;
+        });
+      }, 20 * _i);
+    });
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Ex. of css class animation properties:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```css
+.visualized-node {
+    background-color: #f3c069;
+    animation-name: visualizedNode;
+    animation-duration: 0.6s;
+    animation-iteration-count: 1;
+}
+```
 
-## Learn More
+Algorithms that are covered here:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Algorithm      | Guarantees Shortest Path | Heuristic (if any) |
+| ----------- | ----------- | ----------- |
+| Breadth First Search      | Yes       | None |
+| Depth First Search      | No       | None |
+| Dijkstra      | Yes       | None |
+| Best First Search      | No       | Manhattan Distance |
+| A*      | Yes       | Manhattan Distance |
+| Randomized DFS      | No       | None |
+| Bidirectional BFS      | Yes       | None |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Maze patterns that are covered here:
+
+| Algorithm      | Description |
+| ----------- | ----------- |
+| Basic Random Maze | Picks randomly 25% of all nodes |
+| Recursion Division | Recursively generate maze with one path or two paths |
+| Random Walls | Recursively generate maze with several paths |
+| Randomized DFS | Randomly picks next unvisited neighbour |
+
+Project is written with main aim to help anyone who is interested in these topics. Enjoy playing around!

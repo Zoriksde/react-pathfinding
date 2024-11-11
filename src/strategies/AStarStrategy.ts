@@ -88,6 +88,6 @@ export class AStarStrategy extends AbstractStrategy {
     const rowsDifference = Math.abs(nodeRow - destinationRow);
     const columnsDifference = Math.abs(nodeColumn - destinationColumn);
 
-    return rowsDifference + columnsDifference;
+    return Math.pow(rowsDifference + columnsDifference, 2);
   }
 }
